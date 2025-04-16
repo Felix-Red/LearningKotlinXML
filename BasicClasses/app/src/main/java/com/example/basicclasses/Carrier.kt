@@ -1,0 +1,52 @@
+package com.example.basicclasses
+
+import android.util.Log
+
+class Carrier(name: String) {
+    var name: String = ""
+        private set
+
+    val type = "Carrier"
+
+    private var hullIntegrity = 100
+
+    var attacksRemaining = 1
+        private set
+
+    private var attackPower = 120
+
+    private var sunk = false
+
+    init {
+        this.name = name
+    }
+
+    fun takeDamage(damageTaken: Int){
+        if(!sunk){
+            hullIntegrity -= damageTaken
+            Log.d("$name damage taken =", "$damageTaken")
+            Log.d("$name hull integrity =", "$hullIntegrity")
+
+            if(hullIntegrity <= 0){
+                Log.d("Carrier", "$name has been Sunk!!")
+                sunk = true
+            }
+        }else{
+            Log.d("Error", "Ship does not exist")
+        }
+    }
+
+    fun launchAerialAttack():Int{
+        return if (attacksRemaining > 0){
+            attacksRemaining--
+            attackPower
+        }else{
+            0
+        }
+    }
+
+    fun serviceShip(){
+        attacksRemaining = 20
+        hullIntegrity = 200
+    }
+}
